@@ -1,11 +1,13 @@
-ENGINE = podman
-RUN = ${ENGINE} run -v $$(pwd):/bulebule:Z bulebule
+#ENGINE = podman
+ENGINE = sudo docker
+#RUN = ${ENGINE} run -v $$(pwd):/bulebule:Z bulebule
+RUN = ${ENGINE} run -v $$(pwd):/bulebule:Z -u $$(id -u):$$(id -g) bulebule
 
-ifeq (, $(shell command -v ${ENGINE}))
-	$(warning "Command `${ENGINE}` not found, falling back to Docker...")
-	ENGINE = sudo docker
-	RUN = ${ENGINE} run -v $$(pwd):/bulebule:Z -u $$(id -u):$$(id -g) bulebule
-endif
+#ifeq (, $(shell command -v ${ENGINE}))
+#	$(warning "Command `${ENGINE}` not found, falling back to Docker...")
+#	ENGINE = sudo docker
+#	RUN = ${ENGINE} run -v $$(pwd):/bulebule:Z -u $$(id -u):$$(id -g) bulebule
+#endif
 
 default: src/main.elf
 
